@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { Button } from "./ui/button";
 import {
   DragDropContext,
@@ -29,7 +29,10 @@ export default function MultiImageUploader({
   onImagesChange,
   urlFormatter,
 }: Props) {
-  const uploadInputRef = useRef<HTMLIFrameElement | null>(null);
+  const uploadInputRef = useRef<HTMLInputElement | null>(null);
+
+  console.log({ images });
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     const newImages = files.map((file, index) => {
@@ -43,22 +46,27 @@ export default function MultiImageUploader({
     onImagesChange([...images, ...newImages]);
   };
 
-  const handleDragEnd = (result: DropResult) => {
-    if (!result.destination) {
-      return;
-    }
+  const handleDragEnd = useCallback(
+    (result: DropResult) => {
+      if (!result.destination) {
+        return;
+      }
 
-    const items = Array.from(images);
-    const [reorderedImage] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedImage);
+      const items = Array.from(images);
+      const [reorderedImage] = items.splice(result.source.index, 1);
+      items.splice(result.destination.index, 0, reorderedImage);
+      onImagesChange(items);
+    },
+    [onImagesChange, images]
+  );
 
-    onImagesChange(items);
-  };
-
-  const handleDelete = (id: string) => {
-    const updatedImage = images.filter((image) => image.id !== id);
-    onImagesChange(updatedImage);
-  };
+  const handleDelete = useCallback(
+    (id: string) => {
+      const updatedImages = images.filter((image) => image.id !== id);
+      onImagesChange(updatedImages);
+    },
+    [onImagesChange, images]
+  );
 
   return (
     <div className="w-full max-w-3xl mx-auto p-4">
@@ -92,10 +100,10 @@ export default function MultiImageUploader({
                       className="relative p-2"
                     >
                       <div className="bg-gray-100 rounded-lg flex gap-2 items-center overflow-hidden">
-                        <div className="size-16 relative">
+                        <div className="size-16 w-16 h-16 relative">
                           <Image
                             src={urlFormatter ? urlFormatter(image) : image.url}
-                            alt={image.id}
+                            alt=""
                             fill
                             className="object-cover"
                           />
@@ -115,7 +123,7 @@ export default function MultiImageUploader({
                           >
                             <XIcon />
                           </button>
-                          <div className="text-green-500">
+                          <div className="text-gray-500">
                             <MoveIcon />
                           </div>
                         </div>
