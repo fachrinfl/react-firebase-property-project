@@ -3,7 +3,7 @@ import { Auth, getAuth } from "firebase/auth";
 import { FirebaseStorage, getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_PRIVATE_API_KEY as string,
+  apiKey: (process.env.NEXT_PUBLIC_FIREBASE_API_KEY as string) || "",
   authDomain: "react-property-project.firebaseapp.com",
   projectId: "react-property-project",
   storageBucket: "react-property-project.firebasestorage.app",
