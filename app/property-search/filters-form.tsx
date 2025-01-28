@@ -33,7 +33,6 @@ export default function FilterForm() {
   });
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log({ data });
     const newSearchParams = new URLSearchParams();
 
     if (data.minPrice) {

@@ -69,7 +69,6 @@ export default function UpdatePasswordForm() {
       });
       form.reset();
     } catch (e: any) {
-      console.log({ e });
       toast({
         title:
           e.code === "auth/invalid-credential"

@@ -1,16 +1,16 @@
 "use client";
 
-import { useCallback, useRef } from "react";
-import { Button } from "./ui/button";
 import {
   DragDropContext,
   Draggable,
   Droppable,
   DropResult,
 } from "@hello-pangea/dnd";
-import Image from "next/image";
-import { Badge } from "./ui/badge";
 import { MoveIcon, XIcon } from "lucide-react";
+import Image from "next/image";
+import { useCallback, useRef } from "react";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 
 export type ImageUpload = {
   id: string;
@@ -30,8 +30,6 @@ export default function MultiImageUploader({
   urlFormatter,
 }: Props) {
   const uploadInputRef = useRef<HTMLInputElement | null>(null);
-
-  console.log({ images });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);

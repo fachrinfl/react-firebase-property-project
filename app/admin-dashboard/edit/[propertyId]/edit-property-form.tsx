@@ -1,21 +1,19 @@
 "use client";
 
 import PropertyForm from "@/components/property-form";
+import { useAuth } from "@/context/auth";
+import { storage } from "@/firebase/client";
+import { useToast } from "@/hooks/use-toast";
 import { Property } from "@/types/property";
 import { propertySchema } from "@/validation/propertySchema";
-import { z } from "zod";
-import { useAuth } from "@/context/auth";
-import { updateProperty } from "./actions";
-import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import {
   deleteObject,
   ref,
   uploadBytesResumable,
   UploadTask,
 } from "firebase/storage";
-import { storage } from "@/firebase/client";
-import { savePropertyImages } from "../../actions";
+import { z } from "zod";
+import { updateProperty } from "./actions";
 
 type Props = Property;
 
@@ -34,9 +32,7 @@ export default function EditPropertyForm({
 }: Props) {
   const auth = useAuth();
   const { toast } = useToast();
-  const router = useRouter();
   const handleSubmit = async (data: z.infer<typeof propertySchema>) => {
-    console.log({ data });
     const token = await auth?.currentUser?.getIdToken();
 
     if (!token) {
