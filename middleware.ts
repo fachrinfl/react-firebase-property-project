@@ -1,9 +1,8 @@
+import { decodeJwt } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { decodeJwt } from "jose";
 
 export async function middleware(request: NextRequest) {
-  console.log("MIDDLEWARE: ", request.url);
   if (request.method === "POST") {
     return NextResponse.next();
   }

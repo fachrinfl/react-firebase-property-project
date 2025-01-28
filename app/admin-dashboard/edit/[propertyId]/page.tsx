@@ -3,7 +3,7 @@ import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPropertyById } from "@/data/properties";
 import EditPropertyForm from "./edit-property-form";
-// commnet
+
 export default async function EditProperty({
   params,
 }: {
