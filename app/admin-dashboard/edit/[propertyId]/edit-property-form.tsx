@@ -36,6 +36,7 @@ export default function EditPropertyForm({
   const { toast } = useToast();
   const router = useRouter();
   const handleSubmit = async (data: z.infer<typeof propertySchema>) => {
+    console.log({ data });
     const token = await auth?.currentUser?.getIdToken();
 
     if (!token) {
@@ -83,16 +84,16 @@ export default function EditPropertyForm({
       }
     });
 
-    await Promise.all(storageTasks);
+    // await Promise.all(storageTasks);
 
-    await savePropertyImages({ propertyId: id, images: paths }, token);
+    // await savePropertyImages({ propertyId: id, images: paths }, token);
 
-    toast({
-      title: "Success!",
-      description: "Property updated",
-      variant: "success",
-    });
-    router.push("/admin-dashboard");
+    // toast({
+    //   title: "Success!",
+    //   description: "Property updated",
+    //   variant: "success",
+    // });
+    // router.push("/admin-dashboard");
   };
   return (
     <div>
